@@ -52,21 +52,18 @@ class RedPacketService : AccessibilityService() {
 
     //遍历获得未打开红包
     private fun openRedPacket() {
-        val rootNode = rootInActiveWindow
-        if (rootNode != null) {
-            val listNode = rootNode.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/cpj")
-            if (listNode != null && listNode.size > 0) {
-                val redPackets = rootNode.findAccessibilityNodeInfosByText("领取红包")
-                if (redPackets.isNotEmpty()){
-                    redPackets[0].parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                }
+        val rootNode = rootInActiveWindow ?: return
+        val listNode = rootNode.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/cpj")
+        if (listNode != null && listNode.size > 0) {
+            val redPackets = rootNode.findAccessibilityNodeInfosByText("领取红包")
+            if (redPackets.isNotEmpty()) {
+                redPackets[0].parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
             }
         }
     }
 
     //打开红包
     private fun clickRedPacket() {
-        Thread.sleep(1000)
         val nodeInfo = rootInActiveWindow ?: return
         val clickNode = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/cnu")
         if (clickNode != null && clickNode.size > 0) {
